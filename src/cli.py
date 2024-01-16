@@ -18,7 +18,7 @@ class CLIMacroController():
 
         # マクロの読み込み
         self.macro_manager = MacroManager("macro/")
-        self.macro_manager.scan_macro_file()
+        self.macro_manager.load_macro_files()
 
         # シリアルポート開通
         ser = serial.Serial(port="COM4")
@@ -33,8 +33,8 @@ class CLIMacroController():
         table.add_column("macro name")
         table.add_column("description")
 
-        for name, func in self.macro_manager.macros.items():
-            table.add_row(name, func.__dict__["macro_name"])
+        for name, (func, desc) in self.macro_manager.macros.items():
+            table.add_row(name, desc)
 
         self.console.print(table)
 
@@ -42,7 +42,7 @@ class CLIMacroController():
         macrolist = self.macro_manager.macros.keys()
         target_macro = Prompt.ask("実行するマクロ([bold magenta]macro name[/bold magenta])を入力してください.", console=self.console,choices=macrolist,show_choices=False)
 
-        func = self.macro_manager.macros[target_macro]
+        func, _ = self.macro_manager.macros[target_macro]
         func(self.cmd)
 
     def run(self):

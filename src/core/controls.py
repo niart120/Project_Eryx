@@ -2,9 +2,9 @@ import math
 from enum import IntEnum
 from typing import Union, Callable, Protocol
 
-def exportmacro(macro_name:str):
+def exportmacro(description:str):
 	def _exportmacro(func:Callable):
-		func.__dict__["macro_name"] = macro_name
+		func.__dict__["macro_description"] = description
 		return func
 	return _exportmacro
 

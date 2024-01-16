@@ -17,7 +17,7 @@ class CLICommand():
 
 	def _initialize_key_state(self)->None:
 		# key_state = [header,btn1,btn2,hat,lx,ly,rx,ry,kbdheader,key]
-		self.key_state = bytearray([0xab, 0x0, 0x0, 0x00, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00])
+		self.key_state = bytearray([0xab, 0x00, 0x00, Hat.CENTER, 0x80, 0x80, 0x80, 0x80, 0x00, 0x00, 0x00])
 
 	def press(self, *keys:Union[Button, Hat, LStick, RStick], dur:float=0.1, wait:float=0.1):
 		self.hold(*keys)
