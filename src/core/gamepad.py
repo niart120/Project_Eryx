@@ -1,12 +1,6 @@
 import math
 from enum import IntEnum
-from typing import Union, Callable, Protocol
-
-def exportmacro(description:str):
-	def _exportmacro(func:Callable):
-		func.__dict__["macro_description"] = description
-		return func
-	return _exportmacro
+from typing import Union, Protocol
 
 class Button(IntEnum):
 	Y = 0x0001
