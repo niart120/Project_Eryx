@@ -1,6 +1,9 @@
 from typing import Union
 import time
 
+import os
+import sys
+
 import cv2
 from serial import Serial
 from rich.console import Console
@@ -73,6 +76,7 @@ class CLICommand():
 		return mat
 
 	def send_raw_data(self, raw_data):
+		self.log(raw_data)
 		self.ser.write(raw_data)
 
 	def keyboard(self, text:str):
@@ -88,13 +92,13 @@ class CLIMacroController():
         self.console = Console()
 
         # マクロの読み込み
-        self.macro_manager = MacroManager("macro/")
+        self.macro_manager = MacroManager("macro")
         self.macro_manager.load_macro_files()
 
         # シリアルポート開通
         ser = Serial(port="COM4")
         # カメラオブジェクト取得
-        vc = cv2.VideoCapture(0)
+        vc = None
 
         # コマンドオブジェクト
         self.cmd = CLICommand(ser,vc,self.console)
@@ -122,10 +126,9 @@ class CLIMacroController():
             self.prompt_macro_execution()
 
 def main():
-    
-    controller = CLIMacroController()
-    controller.run()
-        
+	controller = CLIMacroController()
+	controller.run()    
 
 if __name__ == "__main__":
-    main()
+	os.chdir(os.path.dirname(__file__))
+	main()
